@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);
-        JsonResource::withoutWrapping();
+        Schema::defaultStringLength(191);//絵文字保存のために
+        JsonResource::withoutWrapping();//data というキーの下にオブジェクトが入らないように。dataはLaravel のデフォルトの仕様
     }
 }

@@ -1,4 +1,4 @@
-<template>
+<template functional>
     <div class="card w-100">
         <div class="card-body">
             <router-link :to="{ name: 'bookable', params: { id } }">
@@ -11,6 +11,10 @@
 
 <script>
 export default {
-props: {title: String, description: String, id: Number},
+props: {
+    title: String,
+    description: String,
+    id: Number
+},
 }
 </script>

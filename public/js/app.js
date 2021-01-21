@@ -2083,6 +2083,13 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.loading = true;
+    var p = new Promise(function (resolve, reject) {
+      resolve('Hello'); // setTimeout(() => resolve('Hello'), 2000)
+    }).then(function (result) {
+      return console.log(result);
+    })["catch"](function (result) {
+      return console.log(result);
+    });
     var request = axios.get("/api/bookables").then(function (response) {
       _this.bookables = response.data;
       _this.loading = false;
@@ -54366,10 +54373,6 @@ var routes = [{
   component: _bookables_Bookables__WEBPACK_IMPORTED_MODULE_2__["default"],
   name: "home"
 }, {
-  path: "/second",
-  component: _components_Example2_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-  name: "second"
-}, {
   path: "/bookable/:id",
   component: _bookable_Bookable__WEBPACK_IMPORTED_MODULE_3__["default"],
   name: "bookable"
@@ -54400,8 +54403,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\project\laravel\laravelbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\project\laravel\laravelbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\project\laravelbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\project\laravelbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

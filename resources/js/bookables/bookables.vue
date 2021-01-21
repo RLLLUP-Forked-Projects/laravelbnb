@@ -46,6 +46,13 @@ export default {
     created(){
     this.loading =true;
 
+    // const p = new Promise((resolve, reject) => {
+    //     resolve('Hello')
+    //     setTimeout(() => resolve('Hello'), 2000)
+    // })
+    // .then(result => console.log(result))
+    // .catch(result => console.log(result))
+
     const request = axios
     .get("/api/bookables")
     .then(response => {
