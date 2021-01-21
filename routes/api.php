@@ -25,5 +25,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('bookables', 'Api\BookableController')->only('index', 'show');
 Route::get('bookables/{bookable}/availability', 'Api\BookableAvailabilityController')
     ->name('bookables.availability.show');
-
+    // /availability?from=2020-09-01&to=2020-09-05
 
