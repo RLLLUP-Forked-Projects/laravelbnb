@@ -1,14 +1,20 @@
 <template>
     <div>
-        <div class="form-group">
-            <label class="text-muteds" for="">Select the star rating (1 is worst - 5 is best)</label>
-            <star-rating :rating="review.rating" class="fa-3x" v-on:rating:changed="review.rating = $event"></star-rating>
+        <div v-if="loading">loading...</div>
+        <div v-else>
+            <div v-if="alreadyReviewed">
+                <h3>You've already left a review </h3>
+            </div>
+            <div class="form-group">
+                <label class="text-muteds" for="">Select the star rating (1 is worst - 5 is best)</label>
+                <star-rating class="fa-3x" v-model="review.rating"></star-rating>
+            </div>
+            <div class="form-group">
+                <label for="content" class="text-muteds">Describe your experience with</label>
+                <textarea name="content" id="" cols="30" rows="10" class="form-control" v-model="review.content"></textarea>
+            </div>
+            <button class="btn btn-primary btn-block">submit</button>
         </div>
-        <div class="form-group">
-            <label for="content" class="text-muteds">Describe your experience with</label>
-            <textarea name="content" id="" cols="30" rows="10" class="form-control"></textarea>
-        </div>
-        <button class="btn btn-primary btn-block">submit</button>
     </div>
 </template>
 
@@ -20,7 +26,23 @@ export default {
                 rating: 5,
                 content: null,
             },
+            existingReview: null,
+            loading: false,
         }
     },
+    created(){
+        this.loading = true;
+        axios.get(`/api/reviews/${this.$route.params.id}`)
+        .then(response => (this.existingReview = response.data.data))
+        .catch(err => {
+
+        })
+        .then(() => (this.loading = false));
+    },
+    computed: {
+        alreadyReviewed(){
+            return this.existingReview !== null
+        }
+    }
 }
 </script>
