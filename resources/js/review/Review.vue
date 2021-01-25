@@ -29,9 +29,13 @@
                         </div>
                         <div class="form-group">
                             <label for="content" class="text-muteds">Describe your experience with</label>
-                            <textarea name="content" id="" cols="30" rows="10" class="form-control" v-model="review.content"></textarea>
+                            <textarea name="content" id="" cols="30" rows="10" class="form-control" v-model="review.content" :class="[{'is-invalid': errorFor('content')}]"></textarea>
+                            <v-errors :errors="errorFor('content')"></v-errors>
+                            <div>
+                                <div class="invalid-feedback" v-for="(error, index) in errorFor('content')" :key="'content' + index">{{ error[0] }}</div>
+                            </div>
                         </div>
-                        <button class="btn btn-primary btn-block" @click.prevent="submit" :disabled="loading">submit</button>
+                        <button class="btn btn-primary btn-block" @click.prevent="submit" :disabled="sending">submit</button>
                     </div>
                 </div>
             </div>
@@ -54,6 +58,7 @@ export default {
             booking: null,
             error: false,
             errors: null,
+            sending: false,
         }
     },
     created(){
@@ -95,8 +100,8 @@ export default {
     },
     methods: {
         submit(){
+            this.sending = true;
             this.errors = null;
-            this.loading = true;
             axios.post('/api/reviews', this.review)
             .then(response => {
                 console.log(response)
@@ -106,14 +111,17 @@ export default {
                     const errors = err.response.data.errors;
                     if(errors['content'] && 1 == _.size(errors)){
                         this.errors = errors;
+                        return;
                     }
-                    return;
                 }
                 this.error = true;
             })
             .then(() => {
-                this.loading = false;
+                this.sending = false;
             })
+        },
+        errorFor(field){
+            return null !== this.errors && this.errors[field] ? this.errors : null;
         }
     }
 }
