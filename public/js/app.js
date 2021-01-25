@@ -1980,6 +1980,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2377,11 +2378,12 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.error = true;
       }).then(function () {
+        console.log(_this2.errors);
         _this2.sending = false;
       });
     },
     errorFor: function errorFor(field) {
-      return null !== this.errors && this.errors[field] ? this.errors : null;
+      return null !== this.errors && this.errors[field] ? this.errors[field] : null;
     }
   }
 });
@@ -60405,17 +60407,9 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._l(this.errorFor("from"), function(error, index) {
-            return _c(
-              "div",
-              { key: "from" + index, staticClass: "invalid-feedback" },
-              [_vm._v(_vm._s(error))]
-            )
-          }),
-          _vm._v(" "),
-          _c("v-errors", { attrs: { errors: _vm.errorFor("to") } })
+          _c("v-errors", { attrs: { errors: _vm.errorFor("from") } })
         ],
-        2
+        1
       ),
       _vm._v(" "),
       _c(
@@ -60456,7 +60450,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("v-errors", { attrs: { errors: _vm.errorFor("from") } })
+          _c("v-errors", { attrs: { errors: _vm.errorFor("to") } })
         ],
         1
       )
@@ -60894,7 +60888,6 @@ var render = function() {
                                   ],
                                   attrs: {
                                     name: "content",
-                                    id: "",
                                     cols: "30",
                                     rows: "10"
                                   },
@@ -60913,29 +60906,21 @@ var render = function() {
                                   }
                                 }),
                                 _vm._v(" "),
-                                _c("v-errors", {
-                                  attrs: { errors: _vm.errorFor("content") }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  _vm._l(_vm.errorFor("content"), function(
-                                    error,
-                                    index
-                                  ) {
-                                    return _c(
-                                      "div",
-                                      {
-                                        key: "content" + index,
-                                        staticClass: "invalid-feedback"
-                                      },
-                                      [_vm._v(_vm._s(error[0]))]
-                                    )
-                                  }),
-                                  0
-                                )
+                                _vm._l(_vm.errorFor("content"), function(
+                                  error,
+                                  index
+                                ) {
+                                  return _c(
+                                    "div",
+                                    {
+                                      key: "content" + index,
+                                      staticClass: "invalid-feedback"
+                                    },
+                                    [_vm._v(_vm._s(error))]
+                                  )
+                                })
                               ],
-                              1
+                              2
                             ),
                             _vm._v(" "),
                             _c(
@@ -61083,7 +61068,7 @@ var render = function() {
       return _c(
         "div",
         { key: _vm.key(index), staticClass: "invalid-feedback" },
-        [_vm._v(_vm._s(error[0]))]
+        [_vm._v(_vm._s(error))]
       )
     }),
     0

@@ -29,11 +29,11 @@
                         </div>
                         <div class="form-group">
                             <label for="content" class="text-muteds">Describe your experience with</label>
-                            <textarea name="content" id="" cols="30" rows="10" class="form-control" v-model="review.content" :class="[{'is-invalid': errorFor('content')}]"></textarea>
-                            <v-errors :errors="errorFor('content')"></v-errors>
-                            <div>
-                                <div class="invalid-feedback" v-for="(error, index) in errorFor('content')" :key="'content' + index">{{ error[0] }}</div>
-                            </div>
+                            <textarea name="content" cols="30" rows="10" class="form-control" v-model="review.content" :class="[{'is-invalid': errorFor('content')}]"></textarea>
+                            <!-- <v-errors :errors="errorFor('content')"></v-errors> -->
+                            <!-- <div> -->
+                                <div class="invalid-feedback" v-for="(error, index) in errorFor('content')" :key="'content' + index">{{ error }}</div>
+                            <!-- </div> -->
                         </div>
                         <button class="btn btn-primary btn-block" @click.prevent="submit" :disabled="sending">submit</button>
                     </div>
@@ -117,11 +117,12 @@ export default {
                 this.error = true;
             })
             .then(() => {
+                console.log(this.errors)
                 this.sending = false;
             })
         },
         errorFor(field){
-            return null !== this.errors && this.errors[field] ? this.errors : null;
+            return null !== this.errors && this.errors[field] ? this.errors[field] : null;
         }
     }
 }

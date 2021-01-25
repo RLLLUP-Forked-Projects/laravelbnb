@@ -10,13 +10,14 @@
             <div class="form-group col-md-6">
                 <label for="from">From</label>
                 <input type="text" name="from" class="form-control form-control-sm" placeholder="Start date" v-model="from" :class="[{'is-invalid': errorFor('from')}]">
-                <div class="invalid-feedback" v-for="(error, index) in this.errorFor('from')" :key="'from' + index">{{ error }}</div>
-                <v-errors :errors="errorFor('to')"></v-errors>
+                <!-- <div class="invalid-feedback" v-for="(error, index) in this.errorFor('from')" :key="'from' + index">{{ error }}</div> -->
+                <v-errors :errors="errorFor('from')"></v-errors>
             </div>
             <div class="form-group col-md-6">
                 <label for="to">To</label>
                 <input type="text" name="to" class="form-control form-control-sm" placeholder="End date" v-model="to" @keyup.enter="check" :class="[{'is-invalid': errorFor('to')}]">
-                <v-errors :errors="errorFor('from')"></v-errors>
+                <!-- <div class="invalid-feedback" v-for="(error, index) in this.errorFor('to')" :key="'from' + index">{{ error }}</div> -->
+                <v-errors :errors="errorFor('to')"></v-errors>
             </div>
         </div>
         <button class="btn btn-secondary btn-block" @click="check" :disabled="loading">Check!</button>
