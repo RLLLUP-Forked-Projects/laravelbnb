@@ -1,7 +1,8 @@
 <template>
     <div>
+        <success v-if="success">You've left a review, thank you very much!!</success>
         <fatal-error v-if="error"></fatal-error>
-        <div class="row" v-else>
+        <div class="row" v-if="!success && !error">
             <div :class="[{'col-md-4': twoColumns},{'d-none': oneColumn}]">
                 <div class="card">
                     <div class="card-body">
@@ -30,10 +31,7 @@
                         <div class="form-group">
                             <label for="content" class="text-muteds">Describe your experience with</label>
                             <textarea name="content" cols="30" rows="10" class="form-control" v-model="review.content" :class="[{'is-invalid': errorFor('content')}]"></textarea>
-                            <!-- <v-errors :errors="errorFor('content')"></v-errors> -->
-                            <!-- <div> -->
-                                <div class="invalid-feedback" v-for="(error, index) in errorFor('content')" :key="'content' + index">{{ error }}</div>
-                            <!-- </div> -->
+                            <v-errors :errors="errorFor('content')"></v-errors>
                         </div>
                         <button class="btn btn-primary btn-block" @click.prevent="submit" :disabled="sending">submit</button>
                     </div>
@@ -45,7 +43,9 @@
 
 <script>
 import {is404, is422} from "./../shared/utils/response";
+import validationErrors from "./../shared/mixins/validationErrors";
 export default {
+    mixins: [validationErrors],
     data(){
         return {
             review: {
@@ -59,27 +59,44 @@ export default {
             error: false,
             errors: null,
             sending: false,
+            success: false,
         }
     },
-    created(){
+    async created(){
         this.review.id = this.$route.params.id;
         this.loading = true;
-        axios.get(`/api/reviews/${this.review.id}`)
-        .then(response => {this.existingReview = response.data.data})
-        .catch(err => {
+
+        try {
+            this.existingReview = (await axios.get(`/api/reviews/${this.review.id}`)).data.data;
+        } catch(err) {
             if(is404(err)){
-                return axios.get(`/api/booking-by-review/${this.review.id}`).then(response => {
-                    this.booking = response.data;
-                })
-                .catch((err) => {
+                try {
+                    this.booking = (await axios.get(`/api/booking-by-review/${this.review.id}`)).data;
+                } catch(err) {
                     this.error = !is404(err);
-                });
+                }
+            } else {
+                this.error = true;
             }
-            this.error = true;
-        })
-        .then(() => {
-            this.loading = false;
-        });
+        }
+        this.loading = false;
+
+        // axios.get(`/api/reviews/${this.review.id}`)
+        // .then(response => {this.existingReview = response.data.data})
+        // .catch(err => {
+        //     if(is404(err)){
+        //         return axios.get(`/api/booking-by-review/${this.review.id}`).then(response => {
+        //             this.booking = response.data;
+        //         })
+        //         .catch((err) => {
+        //             this.error = !is404(err);
+        //         });
+        //     }
+        //     this.error = true;
+        // })
+        // .then(() => {
+        //     this.loading = false;
+        // });
     },
     computed: {
         alreadyReviewed(){
@@ -102,9 +119,10 @@ export default {
         submit(){
             this.sending = true;
             this.errors = null;
+            this.success = false;
             axios.post('/api/reviews', this.review)
             .then(response => {
-                console.log(response)
+                this.success = 201 == response.status;
             })
             .catch(err => {
                 if(is422(err)){
@@ -121,9 +139,6 @@ export default {
                 this.sending = false;
             })
         },
-        errorFor(field){
-            return null !== this.errors && this.errors[field] ? this.errors[field] : null;
-        }
     }
 }
 </script>
