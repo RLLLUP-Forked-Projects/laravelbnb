@@ -55,7 +55,7 @@ export default {
                 this.$store.dispatch('loadUser');
                 this.$router.push({name: 'home'})
             } catch (error) {
-                console.log('u')
+                dispatch('logout');
                 this.errors = error.response && error.response.data.errors;
             }
             this.loading = false

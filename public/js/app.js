@@ -2055,7 +2055,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 12:
                 _context.prev = 12;
                 _context.t0 = _context["catch"](2);
-                console.log('u');
+                dispatch('logout');
                 _this.errors = _context.t0.response && _context.t0.response.data.errors;
 
               case 16:
@@ -80027,6 +80027,15 @@ Vue.component('fatal-error', _shared_components_FatalError__WEBPACK_IMPORTED_MOD
 Vue.component('v-errors', _shared_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_7__["default"]);
 Vue.component('success', _shared_components_Success__WEBPACK_IMPORTED_MODULE_8__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_9__["default"].Store(_store__WEBPACK_IMPORTED_MODULE_10__["default"]);
+window.axios.interceptors.response.use(function (response) {
+  response;
+}, function (error) {
+  if (401 == error.response.status) {
+    store.dispatch('logout');
+  }
+
+  return Promise.reject(error);
+});
 var app = new Vue({
   el: '#app',
   router: _routes__WEBPACK_IMPORTED_MODULE_1__["default"],
