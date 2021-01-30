@@ -10,6 +10,7 @@ import ValidationErrors from "./shared/components/ValidationErrors";
 import Success from "./shared/components/Success";
 import Vuex from 'vuex'
 import storeDefinition from './store'
+import axios from "axios";
 
 
 
@@ -32,7 +33,8 @@ const app = new Vue({
     components: {
         'index': Index
     },
-    beforeCreate(){
-        this.$store.dispatch('loadStoredState')
+    async beforeCreate(){
+        this.$store.dispatch('loadStoredState');
+        this.$store.dispatch('loadUser');
     }
 });
