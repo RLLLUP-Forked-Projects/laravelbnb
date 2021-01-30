@@ -29,7 +29,7 @@ const store = new Vuex.Store(storeDefinition);
 
 window.axios.interceptors.response.use(
     response => {
-        response
+        return response
     },
     error => {
         if (401 == error.response.status) {
