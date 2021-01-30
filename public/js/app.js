@@ -2145,10 +2145,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    login: function login() {
+    register: function register() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2157,42 +2158,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.errors = null;
                 _context.prev = 2;
                 _context.next = 5;
-                return axios.get('/sanctum/csrf-cookie');
+                return axios.post('/register', _this.user);
 
               case 5:
-                _context.next = 7;
-                return axios.post('/login', {
-                  email: _this.email,
-                  password: _this.password
-                });
+                response = _context.sent;
 
-              case 7:
-                Object(_shared_utils_auth__WEBPACK_IMPORTED_MODULE_2__["logIn"])();
+                if (201 == response.status) {
+                  Object(_shared_utils_auth__WEBPACK_IMPORTED_MODULE_2__["logIn"])();
 
-                _this.$store.dispatch('loadUser');
+                  _this.$store.dispatch('loadUser');
 
-                _this.$router.push({
-                  name: 'home'
-                });
+                  _this.$router.push({
+                    name: 'home'
+                  });
+                }
 
-                _context.next = 16;
+                _context.next = 13;
                 break;
 
-              case 12:
-                _context.prev = 12;
+              case 9:
+                _context.prev = 9;
                 _context.t0 = _context["catch"](2);
                 dispatch('logout');
                 _this.errors = _context.t0.response && _context.t0.response.data.errors;
 
-              case 16:
+              case 13:
                 _this.loading = false;
 
-              case 17:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[2, 12]]);
+        }, _callee, null, [[2, 9]]);
       }))();
     }
   }
