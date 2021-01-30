@@ -16,7 +16,7 @@
                 <hr>
                 <div>
                     No account yet?
-                    <router-link :to="{name: 'home'}" class="font-weight-bold">Register</router-link>
+                    <router-link :to="{name: 'register'}" class="font-weight-bold">Register</router-link>
                 </div>
                 <div>
                     Forgotten password?
